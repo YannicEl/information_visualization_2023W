@@ -9,9 +9,9 @@ export default defineConfig({
 	plugins: [
 		Vue(),
 		UnoCSS(),
-		Components({ dts: 'src/components.d.ts' }),
+		Components({ dts: 'src/components.d.ts', dirs: ['src/composables/*', 'src/utils/*'] }),
 		AutoImport({
-			imports: ['vue'],
+			imports: ['vue', '@vueuse/core'],
 			dts: 'src/auto-imports.d.ts',
 			vueTemplate: true,
 		}),
