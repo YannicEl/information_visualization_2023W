@@ -5,7 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@turf/points-within-polygon':
+  '@turf/boolean-point-in-polygon':
+    specifier: 6.5.0
+    version: 6.5.0
+  '@turf/helpers':
     specifier: 6.5.0
     version: 6.5.0
   '@unocss/reset':
@@ -23,10 +26,10 @@ dependencies:
 
 devDependencies:
   '@types/geojson':
-    specifier: ^7946.0.13
+    specifier: 7946.0.13
     version: 7946.0.13
   '@types/mapbox-gl':
-    specifier: ^2.7.19
+    specifier: 2.7.19
     version: 2.7.19
   '@vitejs/plugin-vue':
     specifier: ^4.5.2
@@ -834,20 +837,6 @@ packages:
     resolution: {integrity: sha512-Wv8PRNCtPD31UVbdJE/KVAWKe7l6US+lJItRR/HOEW3eh+U/JwRCSUl/KZ7bmjM/C+zLNoreM2TU6OoLACs4eg==}
     dependencies:
       '@turf/helpers': 6.5.0
-    dev: false
-
-  /@turf/meta@6.5.0:
-    resolution: {integrity: sha512-RrArvtsV0vdsCBegoBtOalgdSOfkBrTJ07VkpiCnq/491W67hnMWmDu7e6Ztw0C3WldRYTXkg3SumfdzZxLBHA==}
-    dependencies:
-      '@turf/helpers': 6.5.0
-    dev: false
-
-  /@turf/points-within-polygon@6.5.0:
-    resolution: {integrity: sha512-YyuheKqjliDsBDt3Ho73QVZk1VXX1+zIA2gwWvuz8bR1HXOkcuwk/1J76HuFMOQI3WK78wyAi+xbkx268PkQzQ==}
-    dependencies:
-      '@turf/boolean-point-in-polygon': 6.5.0
-      '@turf/helpers': 6.5.0
-      '@turf/meta': 6.5.0
     dev: false
 
   /@types/estree@1.0.5:

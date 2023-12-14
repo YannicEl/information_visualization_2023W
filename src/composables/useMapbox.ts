@@ -9,8 +9,8 @@ export const useMapbox = () => {
 
 		map.value = new mapboxgl.Map({
 			container: containerId,
-			// style: 'mapbox://styles/mapbox/light-v11',
-			style: 'mapbox://styles/smonist/clq597l2s007f01quhdm85ir1',
+			style: 'mapbox://styles/mapbox/light-v11',
+			// style: 'mapbox://styles/smonist/clq597l2s007f01quhdm85ir1',
 			center: center,
 			zoom: 5.5,
 			maxZoom: 19,
