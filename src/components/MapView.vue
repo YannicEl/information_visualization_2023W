@@ -7,17 +7,15 @@
 </template>
 
 <script lang="ts" setup>
-import { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { point } from '@turf/helpers';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { emptyGeoJSON } from '../map/emptyGeoJSON';
-import { dataToGeoJSON } from '../map/dataToGeoJSON';
 import { bindMapPopup } from '../map/mapPopupListeners';
+import { mapboxDataTransform } from '../map/mapboxDataTransform';
 
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
 
-const { data } = useData();
 const { boundariesData } = useBoundariesData();
 
 onMounted(() => {
@@ -94,46 +92,47 @@ onMounted(() => {
 			},
 		});
 
-		watch(data, () => {
-			(map.value.getSource('data-source') as GeoJSONSource).setData(dataToGeoJSON(data.value));
+		mapboxDataTransform();
 
-			// rewrite this with array reduce to return a single object that show the number of cases per LAD
-			const accumulatedLAD = data.value.reduce(
-				(acc, curr) => {
-					if (!curr.lad_id) return acc;
+		// watch(data, () => {
+		// 	(map.value.getSource('data-source') as GeoJSONSource).setData(dataToGeoJSON(data.value));
 
-					if (!acc[curr.lad_id]) {
-						acc[curr.lad_id] = 0;
-					}
-					acc[curr.lad_id] += 1;
-					return acc;
-				},
-				{} as Record<string, number>
-			);
+		// 	const accumulatedLAD = data.value.reduce(
+		// 		(acc, curr) => {
+		// 			if (!curr.lad_id) return acc;
 
-			const boundariesDataAcc = {
-				...boundariesData.value,
-				features: boundariesData.value.features.map((feature) => {
-					const ladId = feature.properties?.LAD13CD;
-					if (!ladId) return false;
+		// 			if (!acc[curr.lad_id]) {
+		// 				acc[curr.lad_id] = 0;
+		// 			}
+		// 			acc[curr.lad_id] += 1;
+		// 			return acc;
+		// 		},
+		// 		{} as Record<string, number>
+		// 	);
 
-					const count = accumulatedLAD[ladId];
-					if (!count) return false;
+		// 	const boundariesDataAcc = {
+		// 		...boundariesData.value,
+		// 		features: boundariesData.value.features.map((feature) => {
+		// 			const ladId = feature.properties?.LAD13CD;
+		// 			if (!ladId) return false;
 
-					return {
-						...feature,
-						properties: {
-							...feature.properties,
-							count,
-						},
-					};
-				}),
-			};
+		// 			const count = accumulatedLAD[ladId];
+		// 			if (!count) return false;
 
-			(map.value.getSource('boundaries-source') as GeoJSONSource).setData(
-				boundariesDataAcc as GeoJSON.FeatureCollection<GeoJSON.Geometry>
-			);
-		});
+		// 			return {
+		// 				...feature,
+		// 				properties: {
+		// 					...feature.properties,
+		// 					count,
+		// 				},
+		// 			};
+		// 		}),
+		// 	};
+
+		// 	(map.value.getSource('boundaries-source') as GeoJSONSource).setData(
+		// 		boundariesDataAcc as GeoJSON.FeatureCollection<GeoJSON.Geometry>
+		// 	);
+		// });
 	});
 });
 </script>
