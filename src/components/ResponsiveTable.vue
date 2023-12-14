@@ -30,6 +30,10 @@ table {
 			}
 		}
 
+		&:nth-child(1n) {
+			@apply bg-white;
+		}
+
 		// bg every 2. row
 		&:nth-child(2n) {
 			@apply bg-gray-100;

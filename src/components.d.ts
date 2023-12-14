@@ -7,6 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    copy: typeof import('./components/TableView copy.vue')['default']
+    FilterView: typeof import('./components/FilterView.vue')['default']
+    MapView: typeof import('./components/MapView.vue')['default']
+    ResponsiveTable: typeof import('./components/ResponsiveTable.vue')['default']
+    TableView: typeof import('./components/TableView.vue')['default']
   }
 }
