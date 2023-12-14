@@ -7,12 +7,13 @@
 </template>
 
 <script lang="ts" setup>
+import { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { point } from '@turf/helpers';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { emptyGeoJSON } from '../map/emptyGeoJSON';
 import { dataToGeoJSON } from '../map/dataToGeoJSON';
-import { GeoJSONSource } from 'mapbox-gl';
+import { bindMapPopup } from '../map/mapPopupListeners';
 
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
 
@@ -22,6 +23,10 @@ const { boundariesData } = useBoundariesData();
 onMounted(() => {
 	const { initMap, map } = useMapbox();
 	initMap(mapboxToken, [-1.28827, 52.993092], 'map');
+
+	const { initPopup } = useMapPopup();
+	initPopup();
+	bindMapPopup(map.value);
 
 	map.value.on('style.load', async () => {
 		map.value.addSource('boundaries-source', {
@@ -125,22 +130,9 @@ onMounted(() => {
 				}),
 			};
 
-			(map.value.getSource('boundaries-source') as GeoJSONSource).setData(boundariesDataAcc);
-
-			console.log('accumulatedLAD', accumulatedLAD);
-			console.log(
-				boundariesData.value.features.find((feature) => feature.properties?.LAD13CD === 'E09000028')
+			(map.value.getSource('boundaries-source') as GeoJSONSource).setData(
+				boundariesDataAcc as GeoJSON.FeatureCollection<GeoJSON.Geometry>
 			);
-
-			// const x = filteredData.value.map((data) => {
-			// 	if (!data.lad_id) return false;
-
-			// 	const lad = boundariesData.value.features.find(
-			// 		(feature) => feature.properties?.LAD13CD === data.lad_id
-			// 	);
-
-			// 	return lad;
-			// });
 		});
 	});
 });
