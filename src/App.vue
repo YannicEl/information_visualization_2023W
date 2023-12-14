@@ -1,5 +1,6 @@
 <script setup lang="ts">
 loadData();
+loadBoundariesData();
 </script>
 
 <template>
