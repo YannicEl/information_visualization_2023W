@@ -1,8 +1,8 @@
 <template>
 	<div class="flex flex-col">
-		<div>Map</div>
-		{{ filteredData }}
-		<div id="map"></div>
+		<div class="relative h-full">
+			<div id="map" class="absolute h-full w-full"></div>
+		</div>
 	</div>
 </template>
 
@@ -16,7 +16,7 @@ import { GeoJSONSource } from 'mapbox-gl';
 
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
 
-const { filteredData } = useFilteredData();
+const { data } = useData();
 const { boundariesData } = useBoundariesData();
 
 onMounted(() => {
@@ -89,13 +89,11 @@ onMounted(() => {
 			},
 		});
 
-		watch(filteredData, () => {
-			(map.value.getSource('data-source') as GeoJSONSource).setData(
-				dataToGeoJSON(filteredData.value)
-			);
+		watch(data, () => {
+			(map.value.getSource('data-source') as GeoJSONSource).setData(dataToGeoJSON(data.value));
 
 			// rewrite this with array reduce to return a single object that show the number of cases per LAD
-			const accumulatedLAD = filteredData.value.reduce(
+			const accumulatedLAD = data.value.reduce(
 				(acc, curr) => {
 					if (!curr.lad_id) return acc;
 
@@ -148,8 +146,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
-#map {
-	height: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>

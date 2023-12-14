@@ -1,9 +1,13 @@
 <template>
-	<button class="bg-gray-300" @click="setFilteredData([data[0]])">Filter</button>
+	<div>
+		<select v-model="filters.values.age_range">
+			<option v-for="option in filters.options.age_range">{{ option }}</option>
+		</select>
+	</div>
 </template>
 
 <script lang="ts" setup>
-const { data } = useData();
+const { filters } = useData();
 </script>
 
 <style scoped lang="scss"></style>

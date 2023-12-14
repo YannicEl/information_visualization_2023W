@@ -18,15 +18,44 @@ export interface Data {
 	lad_id: string;
 }
 
-const data = ref<Data[]>([]);
+const data = shallowRef<Data[]>([]);
+
+const filters = ref({
+	values: {
+		age_range: 'all',
+	},
+	options: {
+		age_range: extractOptions('Age range', data),
+	},
+});
+
+const filtered = computed(() => {
+	const { age_range } = filters.value.values;
+	return data.value.filter((item) => {
+		if (age_range !== 'all' && item['Age range'] !== age_range) return false;
+
+		return true;
+	});
+});
 
 export function useData() {
-	return { data };
+	return { data: filtered, filters };
 }
 
 export function loadData() {
 	import('../assets/data_boundaries.json').then((res) => {
 		data.value = res.default as Data[];
 		console.log(`Loaded ${data.value.length} data items`);
+	});
+}
+
+function extractOptions(key: string, data: Ref<any[]>) {
+	return computed(() => {
+		const set = new Set<string>(['all']);
+		data.value.forEach((item) => {
+			set.add(item[key]);
+		});
+
+		return Array.from(set).filter(Boolean);
 	});
 }
