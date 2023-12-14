@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<div class="overflow-x-scroll">
-			<ResponsiveTable v-if="data.length" class="col-span-1 my-4 md:col-span-3">
+	<div class="flex flex-1 flex-col">
+		<div ref="table" class="relative h-full">
+			<ResponsiveTable v-if="data.length">
 				<tr>
 					<th v-for="column in columns" :key="column">{{ column }}</th>
 				</tr>
@@ -12,17 +12,22 @@
 			</ResponsiveTable>
 		</div>
 
-		<button @click="page--">prev</button>
-		<button @click="page++">next</button>
+		<div>
+			<button @click="page--" class="mr-2 bg-gray-500 p-2">Back</button>
+			<button @click="page++" class="bg-gray-500 p-2">Next</button>
+		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 const { data } = useData();
-
 const columns = computed(() => Object.keys(data.value[0]));
 
-const chunkSize = ref(10);
+const table = ref<HTMLDivElement | null>();
+const height = computed(() => table.value?.clientHeight ?? 0);
+
+const itemHeihgt = 52;
+const chunkSize = computed(() => Math.trunc((height.value - 33) / itemHeihgt));
 const page = ref(0);
 const range = computed(() => {
 	return Array(chunkSize.value)

@@ -3,10 +3,11 @@ loadData();
 </script>
 
 <template>
-	<div class="grid h-screen w-screen grid-cols-2 gap-4 p-4">
-		<FilterView class="col-span-2 bg-red-500" />
-		<MapView class="bg-green-500" />
-		<TableView class="bg-blue-500" />
+	<div class="grid h-screen grid-cols-2 grid-rows-[min-content] gap-4 p-4">
+		<FilterView class="col-span-2 h-20" />
+
+		<MapView />
+		<TableView />
 	</div>
 </template>
 
