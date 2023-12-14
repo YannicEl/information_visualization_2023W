@@ -20,7 +20,7 @@ const { boundariesData } = useBoundariesData();
 
 onMounted(() => {
 	const { initMap, map } = useMapbox();
-	initMap(mapboxToken, [-1.28827, 52.993092], 'map');
+	initMap(mapboxToken, [-0.127029, 51.497278], 'map');
 
 	const { initPopup } = useMapPopup();
 	initPopup();
@@ -58,7 +58,7 @@ onMounted(() => {
 					100,
 					'rgb(220, 38, 38)',
 				],
-				'fill-opacity': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 1, 0.7],
+				'fill-opacity': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 600, 0.7],
 			},
 		});
 
@@ -87,8 +87,9 @@ onMounted(() => {
 			type: 'circle',
 			source: 'data-source',
 			paint: {
-				'circle-radius': 5,
 				'circle-color': '#22B422',
+				'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 0, 9.5, 2, 19, 8],
+				'circle-opacity': 0.9,
 			},
 		});
 

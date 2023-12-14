@@ -12,7 +12,7 @@ export const useMapbox = () => {
 			style: 'mapbox://styles/mapbox/light-v11',
 			// style: 'mapbox://styles/smonist/clq597l2s007f01quhdm85ir1',
 			center: center,
-			zoom: 5.5,
+			zoom: 8,
 			maxZoom: 19,
 		});
 	};
