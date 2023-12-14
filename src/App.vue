@@ -1,10 +1,12 @@
 <script setup lang="ts">
 loadData();
 // loadBoundariesData();
+
+const { data } = useData();
 </script>
 
 <template>
-	<div class="grid h-screen grid-cols-2 grid-rows-[min-content] gap-4 p-4">
+	<div v-if="data.length" class="grid h-screen grid-cols-2 grid-rows-[min-content] gap-4 p-4">
 		<FilterView class="col-span-2" />
 
 		<MapView />
