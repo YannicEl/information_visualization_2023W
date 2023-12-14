@@ -12,9 +12,11 @@
 			</ResponsiveTable>
 		</div>
 
-		<div>
-			<button @click="page--" class="mr-2 bg-gray-500 p-2">Back</button>
+		<div class="flex items-center gap-4">
+			<button @click="page--" class="bg-gray-500 p-2">Back</button>
 			<button @click="page++" class="bg-gray-500 p-2">Next</button>
+
+			<div>Datepoints: {{ data.length }}</div>
 		</div>
 	</div>
 </template>

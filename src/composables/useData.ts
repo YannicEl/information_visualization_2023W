@@ -23,16 +23,19 @@ const data = shallowRef<Data[]>([]);
 const filters = ref({
 	values: {
 		age_range: 'all',
+		gender: 'all',
 	},
 	options: {
 		age_range: extractOptions('Age range', data),
+		gender: extractOptions('Gender', data),
 	},
 });
 
 const filtered = computed(() => {
-	const { age_range } = filters.value.values;
+	const { age_range, gender } = filters.value.values;
 	return data.value.filter((item) => {
 		if (age_range !== 'all' && item['Age range'] !== age_range) return false;
+		if (gender !== 'all' && item['Gender'] !== gender) return false;
 
 		return true;
 	});
