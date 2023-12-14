@@ -2,6 +2,13 @@
 	<div class="flex flex-col">
 		<div class="relative h-full">
 			<div id="map" class="absolute h-full w-full"></div>
+			<div class="min-w-60 absolute left-4 top-4 bg-black bg-opacity-80 p-4 text-white">
+				{{ hoverInfoDistrict }}
+			</div>
+
+			<div class="h-100 min-w-40 absolute right-4 top-4 bg-black bg-opacity-80 p-4 text-white">
+				{{ hoverInfoCase }}
+			</div>
 		</div>
 	</div>
 </template>
@@ -15,16 +22,18 @@ import { bindMapPopup } from '../map/mapPopupListeners';
 import { mapboxDataTransform } from '../map/mapboxDataTransform';
 
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
-
 const { boundariesData } = useBoundariesData();
+
+const hoverInfoDistrict = ref('Hover over a district!');
+const hoverInfoCase = ref('');
 
 onMounted(() => {
 	const { initMap, map } = useMapbox();
 	initMap(mapboxToken, [-0.127029, 51.497278], 'map');
 
-	const { initPopup } = useMapPopup();
-	initPopup();
-	bindMapPopup(map.value);
+	// const { initPopup } = useMapPopup();
+	// initPopup();
+	// bindMapPopup(map.value);
 
 	map.value.on('style.load', async () => {
 		map.value.addSource('boundaries-source', {
@@ -95,45 +104,23 @@ onMounted(() => {
 
 		mapboxDataTransform();
 
-		// watch(data, () => {
-		// 	(map.value.getSource('data-source') as GeoJSONSource).setData(dataToGeoJSON(data.value));
+		map.value.on('mousemove', (event) => {
+			const counts = map.value.queryRenderedFeatures(event.point, {
+				layers: ['boundaries-fill'],
+			});
 
-		// 	const accumulatedLAD = data.value.reduce(
-		// 		(acc, curr) => {
-		// 			if (!curr.lad_id) return acc;
+			const count = counts[0];
+			hoverInfoDistrict.value = count
+				? `${count.properties?.LAD13NM}: ${count.properties?.count}`
+				: 'Hover over a district!';
 
-		// 			if (!acc[curr.lad_id]) {
-		// 				acc[curr.lad_id] = 0;
-		// 			}
-		// 			acc[curr.lad_id] += 1;
-		// 			return acc;
-		// 		},
-		// 		{} as Record<string, number>
-		// 	);
+			const cases = map.value.queryRenderedFeatures(event.point, {
+				layers: ['data'],
+			});
 
-		// 	const boundariesDataAcc = {
-		// 		...boundariesData.value,
-		// 		features: boundariesData.value.features.map((feature) => {
-		// 			const ladId = feature.properties?.LAD13CD;
-		// 			if (!ladId) return false;
-
-		// 			const count = accumulatedLAD[ladId];
-		// 			if (!count) return false;
-
-		// 			return {
-		// 				...feature,
-		// 				properties: {
-		// 					...feature.properties,
-		// 					count,
-		// 				},
-		// 			};
-		// 		}),
-		// 	};
-
-		// 	(map.value.getSource('boundaries-source') as GeoJSONSource).setData(
-		// 		boundariesDataAcc as GeoJSON.FeatureCollection<GeoJSON.Geometry>
-		// 	);
-		// });
+			const caseFeature = cases[0];
+			hoverInfoCase.value = caseFeature ? `${JSON.stringify(caseFeature.properties)}` : '';
+		});
 	});
 });
 </script>
