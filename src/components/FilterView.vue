@@ -1,5 +1,5 @@
 <template>
-	<div class="flex gap-4">
+	<div class="flex flex-wrap gap-4">
 		<label v-for="(options, key) in filters.options">
 			<span class="capitalize">{{ key.split('_').join(' ') }}</span>
 

@@ -14,6 +14,8 @@
 					</td>
 				</tr>
 			</ResponsiveTable>
+
+			<div v-else class="font-medium">No data found with selected filter options.</div>
 		</div>
 
 		<div class="mt-4 flex items-center justify-end gap-4">

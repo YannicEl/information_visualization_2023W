@@ -23,37 +23,45 @@ const filters = ref({
 		type: 'all',
 		age_range: 'all',
 		gender: 'all',
+		self_defined_ethnicity: 'all',
+		officer_defined_ethnicity: 'all',
+		legislation: 'all',
 		object_of_search: 'all',
 		outcome: 'all',
+		lad_name: 'all',
 		date: {
 			from: new Date('2021-05-31'),
 			till: new Date('2021-07-01'),
 		},
 	},
 	options: {
-		type: extractOptions('type', data),
-		age_range: extractOptions('age_range', data),
-		gender: extractOptions('gender', data),
-		object_of_search: extractOptions('object_of_search', data),
-		outcome: extractOptions('object_of_search', data),
+		type: extractOptions('type'),
+		age_range: extractOptions('age_range'),
+		gender: extractOptions('gender'),
+		self_defined_ethnicity: extractOptions('self_defined_ethnicity'),
+		officer_defined_ethnicity: extractOptions('officer_defined_ethnicity'),
+		legislation: extractOptions('legislation'),
+		object_of_search: extractOptions('object_of_search'),
+		outcome: extractOptions('outcome'),
+		lad_name: extractOptions('lad_name'),
 	},
 });
 
 const filtered = computed(() => {
-	const { type, age_range, gender, object_of_search, outcome, date } = filters.value.values;
+	const { date, ...rest } = filters.value.values;
 
 	console.time('filtering');
 	const ret = data.value.filter((item) => {
-		if (type !== 'all' && item.type !== type) return false;
-		if (age_range !== 'all' && item.age_range !== age_range) return false;
-		if (gender !== 'all' && item.gender !== gender) return false;
-		if (object_of_search !== 'all' && item.object_of_search !== object_of_search) return false;
-		if (outcome !== 'all' && item.outcome !== outcome) return false;
+		let ret = true;
+
+		Object.entries(rest).forEach(([key, value]) => {
+			if (value !== 'all' && item[key as keyof Data] !== value) ret = false;
+		});
 
 		const itemDate = new Date(item.date).valueOf();
-		if (itemDate < date.from.valueOf() || itemDate > date.till.valueOf()) return false;
+		if (itemDate < date.from.valueOf() || itemDate > date.till.valueOf()) ret = false;
 
-		return true;
+		return ret;
 	});
 	console.timeEnd('filtering');
 
@@ -72,11 +80,11 @@ export function loadData() {
 	});
 }
 
-function extractOptions(key: keyof Data, data: Ref<any[]>) {
+function extractOptions(key: keyof Data) {
 	return computed(() => {
 		const set = new Set<string>(['all']);
 		data.value.forEach((item) => {
-			set.add(item[key]);
+			set.add(item[key] as any);
 		});
 
 		return Array.from(set).filter(Boolean);
