@@ -9,7 +9,7 @@ export const dataToGeoJSON = (data: Data[]): GeoJSON.FeatureCollection<GeoJSON.G
 		},
 		geometry: {
 			type: 'Point',
-			coordinates: [d.Longitude, d.Latitude],
+			coordinates: [d.longitude, d.latitude],
 		},
 	})),
 });

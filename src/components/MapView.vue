@@ -15,10 +15,7 @@
 
 <script lang="ts" setup>
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { point } from '@turf/helpers';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { emptyGeoJSON } from '../map/emptyGeoJSON';
-import { bindMapPopup } from '../map/mapPopupListeners';
 import { mapboxDataTransform } from '../map/mapboxDataTransform';
 
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);

@@ -1,19 +1,16 @@
 export interface Data {
-	Type: string;
-	Date: string;
-	'Part of a policing operation': string;
-	'Policing operation': string;
-	Latitude: number;
-	Longitude: number;
-	Gender: string;
-	'Age range': string;
-	'Self-defined ethnicity': string;
-	'Officer-defined ethnicity': string;
-	Legislation: string;
-	'Object of search': string;
-	Outcome: string;
-	'Outcome linked to object of search': string;
-	'Removal of more than just outer clothing': string;
+	type: string;
+	date: string;
+	part_of_a_policing_operation: boolean;
+	latitude: number;
+	longitude: number;
+	gender: string;
+	age_range: string;
+	self_defined_ethnicity: string;
+	officer_defined_ethnicity: string;
+	legislation: string;
+	object_of_search: string;
+	outcome: string;
 	lad_name: string;
 	lad_id: string;
 }
@@ -26,19 +23,21 @@ const filters = ref({
 		gender: 'all',
 	},
 	options: {
-		age_range: extractOptions('Age range', data),
-		gender: extractOptions('Gender', data),
+		age_range: extractOptions('age_range', data),
+		gender: extractOptions('gender', data),
 	},
 });
 
 const filtered = computed(() => {
 	const { age_range, gender } = filters.value.values;
-	return data.value.filter((item) => {
-		if (age_range !== 'all' && item['Age range'] !== age_range) return false;
-		if (gender !== 'all' && item['Gender'] !== gender) return false;
+	const ret = data.value.filter((item) => {
+		if (age_range !== 'all' && item.age_range !== age_range) return false;
+		if (gender !== 'all' && item.gender !== gender) return false;
 
 		return true;
 	});
+
+	return ret;
 });
 
 export function useData() {
@@ -52,7 +51,7 @@ export function loadData() {
 	});
 }
 
-function extractOptions(key: string, data: Ref<any[]>) {
+function extractOptions(key: keyof Data, data: Ref<any[]>) {
 	return computed(() => {
 		const set = new Set<string>(['all']);
 		data.value.forEach((item) => {

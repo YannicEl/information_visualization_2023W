@@ -1,5 +1,5 @@
 <template>
-	<div class="absolute inline h-full w-full overflow-x-auto overflow-y-hidden">
+	<div class="scrollbar-thicc absolute inline h-full w-full overflow-x-auto overflow-y-hidden">
 		<table class="w-full">
 			<slot />
 		</table>
@@ -38,6 +38,25 @@ table {
 		&:nth-child(2n) {
 			@apply bg-gray-100;
 		}
+	}
+}
+
+.scrollbar-thicc {
+	&::-webkit-scrollbar {
+		width: 5px;
+		height: 7px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 9999px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #9ea198;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: #f5f9ee;
 	}
 }
 </style>

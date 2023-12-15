@@ -3,7 +3,9 @@
 		<div ref="table" class="relative h-full">
 			<ResponsiveTable v-if="data.length">
 				<tr>
-					<th v-for="column in columns" :key="column">{{ column }}</th>
+					<th v-for="column in columns" :key="column" class="capitalize">
+						{{ column.split('_').join(' ') }}
+					</th>
 				</tr>
 
 				<tr v-for="rowIndex in range">
@@ -12,11 +14,14 @@
 			</ResponsiveTable>
 		</div>
 
-		<div class="flex items-center gap-4">
-			<button @click="page--" class="bg-gray-500 p-2">Back</button>
-			<button @click="page++" class="bg-gray-500 p-2">Next</button>
+		<div class="mt-4 flex items-center justify-end gap-4">
+			<div>
+				{{ page * chunkSize + 1 }} - {{ Math.min(page * chunkSize + chunkSize, data.length) }} of
+				{{ data.length }}
+			</div>
 
-			<div>Datepoints: {{ data.length }}</div>
+			<button @click="decrement" class="i-mdi-chevron-left p-2 text-2xl text-black"></button>
+			<button @click="increment" class="i-mdi-chevron-right p-2 text-2xl text-black"></button>
 		</div>
 	</div>
 </template>
@@ -25,17 +30,38 @@
 const { data } = useData();
 const columns = computed(() => Object.keys(data.value[0]));
 
+// Reset page to 0 if data gets filtered
+watch(data, () => {
+	page.value = 0;
+});
+
 const table = ref<HTMLDivElement | null>();
 const height = computed(() => table.value?.clientHeight ?? 0);
 
-const itemHeihgt = 52;
-const chunkSize = computed(() => Math.trunc((height.value - 33) / itemHeihgt));
+const itemHeight = 52;
+const chunkSize = computed(() => Math.trunc((height.value - 33) / itemHeight));
 const page = ref(0);
 const range = computed(() => {
 	return Array(chunkSize.value)
 		.fill(null)
-		.map((_, index) => page.value * chunkSize.value * index);
+		.map((_, index) => {
+			return page.value * chunkSize.value + index;
+		});
 });
+
+function increment() {
+	if ((page.value + 1) * chunkSize.value <= data.value.length) {
+		page.value++;
+	}
+}
+
+function decrement() {
+	if (page.value <= 0) {
+		page.value = 0;
+	} else {
+		page.value--;
+	}
+}
 </script>
 
 <style scoped lang="scss"></style>
