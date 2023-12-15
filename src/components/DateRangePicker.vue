@@ -1,6 +1,6 @@
 <template>
 	<div class="flex gap-4">
-		<label>
+		<label class="custom-input">
 			<span>From:</span>
 
 			<input
@@ -12,7 +12,7 @@
 			/>
 		</label>
 
-		<label>
+		<label class="custom-input">
 			<span>Till:</span>
 
 			<input

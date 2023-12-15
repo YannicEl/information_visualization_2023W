@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-wrap gap-4">
-		<label v-for="(options, key) in filters.options">
+		<label v-for="(options, key) in filters.options" class="custom-input">
 			<span class="capitalize">{{ key.split('_').join(' ') }}</span>
 
 			<select v-model="filters.values[key]">

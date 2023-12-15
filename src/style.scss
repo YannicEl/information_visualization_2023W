@@ -13,15 +13,15 @@ html {
 	@apply font-sans text-base;
 }
 
-select,
-input {
-	@apply border-2 border-black px-2 py-1;
-}
-
-label {
+label.custom-input {
 	@apply flex flex-col;
 
 	span {
 		@apply px-2 pb-1 text-xs;
+	}
+
+	select,
+	input {
+		@apply border-2 border-black px-2 py-1;
 	}
 }
