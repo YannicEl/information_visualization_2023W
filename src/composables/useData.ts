@@ -29,6 +29,7 @@ const filters = ref({
 		object_of_search: 'all',
 		outcome: 'all',
 		lad_name: 'all',
+		part_of_a_policing_operation: 'all',
 		date: {
 			from: new Date('2021-05-31'),
 			till: new Date('2021-07-01'),
@@ -44,6 +45,7 @@ const filters = ref({
 		object_of_search: extractOptions('object_of_search'),
 		outcome: extractOptions('outcome'),
 		lad_name: extractOptions('lad_name'),
+		part_of_a_policing_operation: extractOptions('part_of_a_policing_operation'),
 	},
 });
 
