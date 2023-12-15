@@ -66,7 +66,7 @@ onMounted(() => {
 			layout: {},
 			paint: {
 				'fill-color': '#0C7BDC',
-				'fill-opacity': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 600, 0.7],
+				'fill-opacity': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 1256, 0.7],
 			},
 		});
 
