@@ -113,7 +113,7 @@ onMounted(() => {
 			paint: {
 				'circle-color': '#FFC20A',
 				'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 0, 9.5, 2, 19, 8],
-				'circle-opacity': 0.9,
+				'circle-opacity': 0.8,
 			},
 		});
 
@@ -134,7 +134,8 @@ onMounted(() => {
 			});
 
 			const caseFeature = cases[0];
-			hoverInfoCase.value = caseFeature && caseFeature.properties ? caseFeature.properties : {};
+			if (caseFeature && caseFeature.properties) hoverInfoCase.value = caseFeature.properties;
+			// hoverInfoCase.value = caseFeature && caseFeature.properties ? caseFeature.properties : {};
 		});
 
 		map.value.on('click', 'boundaries-fill', (e) => {
