@@ -10,7 +10,7 @@
 				<div class="flex h-full w-full flex-col">
 					<div v-for="key in Object.keys(hoverInfoCase)" :key="key" class="flex">
 						<div class="underline">{{ dataNameMapping[key] }}:</div>
-						<div>
+						<div class="ml-1">
 							{{ hoverInfoCase[key] }}
 						</div>
 					</div>
