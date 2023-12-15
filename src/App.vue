@@ -16,6 +16,11 @@ const { boundariesData } = useBoundariesData();
 		<MapView />
 		<TableView />
 	</div>
+
+	<div v-else class="w-scren flex h-screen items-center justify-center gap-4">
+		<span class="flex-shrink-0 font-medium">Loading Data</span>
+		<Spinner class="h-6 w-6 stroke-black" />
+	</div>
 </template>
 
 <style scoped></style>

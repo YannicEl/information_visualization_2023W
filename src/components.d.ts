@@ -10,6 +10,7 @@ declare module 'vue' {
     FilterView: typeof import('./components/FilterView.vue')['default']
     MapView: typeof import('./components/MapView.vue')['default']
     ResponsiveTable: typeof import('./components/ResponsiveTable.vue')['default']
+    Spinner: typeof import('./components/Spinner.vue')['default']
     TableView: typeof import('./components/TableView.vue')['default']
   }
 }
