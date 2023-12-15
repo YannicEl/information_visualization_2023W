@@ -79,15 +79,7 @@ onMounted(() => {
 			source: 'boundaries-source',
 			layout: {},
 			paint: {
-				'fill-color': [
-					'interpolate',
-					['linear'],
-					['get', 'count'],
-					0,
-					'rgb(220, 38, 38)',
-					100,
-					'rgb(220, 38, 38)',
-				],
+				'fill-color': '#0C7BDC',
 				'fill-opacity': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 600, 0.7],
 			},
 		});
@@ -117,7 +109,7 @@ onMounted(() => {
 			type: 'circle',
 			source: 'data-source',
 			paint: {
-				'circle-color': '#22B422',
+				'circle-color': '#FFC20A',
 				'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 0, 9.5, 2, 19, 8],
 				'circle-opacity': 0.9,
 			},
