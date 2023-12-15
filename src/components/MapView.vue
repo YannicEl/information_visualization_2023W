@@ -25,6 +25,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { emptyGeoJSON } from '../map/emptyGeoJSON';
 import { mapboxDataTransform } from '../map/mapboxDataTransform';
 
+const { filters } = useData();
+
 const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
 const { boundariesData } = useBoundariesData();
 
@@ -133,6 +135,14 @@ onMounted(() => {
 
 			const caseFeature = cases[0];
 			hoverInfoCase.value = caseFeature && caseFeature.properties ? caseFeature.properties : {};
+		});
+
+		map.value.on('click', 'boundaries-fill', (e) => {
+			if (!e.features || e.features.length === 0) return;
+			const feature = e.features[0];
+			if (!feature.properties) return;
+
+			filters.value.values.lad_name = feature.properties.LAD13NM;
 		});
 	});
 });
