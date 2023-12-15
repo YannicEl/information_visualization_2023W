@@ -7,7 +7,14 @@
 			</div>
 
 			<div class="h-100 min-w-40 absolute right-4 top-4 bg-black bg-opacity-80 p-4 text-white">
-				{{ hoverInfoCase }}
+				<div class="flex h-full w-full flex-col">
+					<div v-for="key in Object.keys(hoverInfoCase)" :key="key" class="flex">
+						<div class="underline">{{ dataNameMapping[key] }}:</div>
+						<div>
+							{{ hoverInfoCase[key] }}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -22,7 +29,24 @@ const mapboxToken = String(import.meta.env.VITE_MAPBOX_TOKEN);
 const { boundariesData } = useBoundariesData();
 
 const hoverInfoDistrict = ref('Hover over a district!');
-const hoverInfoCase = ref('');
+const hoverInfoCase = ref<Record<string, any>>({});
+
+const dataNameMapping: Record<string, string> = {
+	type: 'Type',
+	date: 'Date',
+	part_of_a_policing_operation: 'Part of a policing operation',
+	latitude: 'Latitude',
+	longitude: 'Longitude',
+	gender: 'Gender',
+	age_range: 'Age Range',
+	self_defined_ethnicity: 'Self Defined Ethnicity',
+	officer_defined_ethnicity: 'Officer Defined Ethnicity',
+	legislation: 'Legislation',
+	object_of_search: 'Object Of Search',
+	outcome: 'Outcome',
+	lad_name: 'Disctrict',
+	lad_id: 'Disctrict Code',
+};
 
 onMounted(() => {
 	const { initMap, map } = useMapbox();
@@ -116,7 +140,7 @@ onMounted(() => {
 			});
 
 			const caseFeature = cases[0];
-			hoverInfoCase.value = caseFeature ? `${JSON.stringify(caseFeature.properties)}` : '';
+			hoverInfoCase.value = caseFeature && caseFeature.properties ? caseFeature.properties : {};
 		});
 	});
 });
