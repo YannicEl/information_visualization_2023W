@@ -110,7 +110,7 @@ onMounted(() => {
 
 			const count = counts[0];
 			hoverInfoDistrict.value = count
-				? `${count.properties?.LAD13NM}: ${count.properties?.count}`
+				? `${count.properties?.LAD13NM}: ${count.properties?.count} cases`
 				: 'Hover over a district!';
 
 			const cases = map.value.queryRenderedFeatures(event.point, {
