@@ -1,12 +1,13 @@
 <template>
 	<div class="flex flex-col">
 		<div class="relative h-full">
-			<div id="map" class="absolute h-full w-full"></div>
+			<div id="map" class="absolute h-full w-2/3"></div>
+			<DetailView :info="hoverInfoCase" class="absolute right-0 top-0 h-full w-1/3" />
 			<div class="min-w-60 absolute left-4 top-4 bg-black bg-opacity-80 p-4 text-white">
 				{{ hoverInfoDistrict }}
 			</div>
 
-			<div class="h-100 min-w-40 absolute right-4 top-4 bg-black bg-opacity-80 p-4 text-white">
+			<!-- <div class="h-100 min-w-40 absolute right-4 top-4 bg-black bg-opacity-80 p-4 text-white">
 				<div class="flex h-full w-full flex-col">
 					<div v-for="key in Object.keys(hoverInfoCase)" :key="key" class="flex">
 						<div class="underline">{{ dataNameMapping[key] }}:</div>
@@ -15,7 +16,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -32,23 +33,6 @@ const { boundariesData } = useBoundariesData();
 
 const hoverInfoDistrict = ref('Hover over a district!');
 const hoverInfoCase = ref<Record<string, any>>({});
-
-const dataNameMapping: Record<string, string> = {
-	type: 'Type',
-	date: 'Date',
-	part_of_a_policing_operation: 'Part of a policing operation',
-	latitude: 'Latitude',
-	longitude: 'Longitude',
-	gender: 'Gender',
-	age_range: 'Age Range',
-	self_defined_ethnicity: 'Self Defined Ethnicity',
-	officer_defined_ethnicity: 'Officer Defined Ethnicity',
-	legislation: 'Legislation',
-	object_of_search: 'Object Of Search',
-	outcome: 'Outcome',
-	lad_name: 'Disctrict',
-	lad_id: 'Disctrict Code',
-};
 
 onMounted(() => {
 	const { initMap, map } = useMapbox();
