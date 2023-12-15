@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     DateRangePicker: typeof import('./components/DateRangePicker.vue')['default']
     FilterView: typeof import('./components/FilterView.vue')['default']
-    MapInfoCase: typeof import('./components/MapInfoCase.vue')['default']
     MapView: typeof import('./components/MapView.vue')['default']
     ResponsiveTable: typeof import('./components/ResponsiveTable.vue')['default']
     Spinner: typeof import('./components/Spinner.vue')['default']
