@@ -9,7 +9,9 @@
 				</tr>
 
 				<tr v-for="rowIndex in range">
-					<td v-for="column in data[rowIndex]">{{ column }}</td>
+					<td v-for="(value, key) in data[rowIndex]">
+						{{ key === 'date' ? formatDate(value as string) : value }}
+					</td>
 				</tr>
 			</ResponsiveTable>
 		</div>

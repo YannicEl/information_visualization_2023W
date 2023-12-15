@@ -52,11 +52,11 @@ table {
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: #9ea198;
+		background-color: rgb(148, 148, 148);
 	}
 
 	&::-webkit-scrollbar-track {
-		background-color: #f5f9ee;
+		background-color: #f3f4f6;
 	}
 }
 </style>

@@ -1,12 +1,14 @@
 <template>
 	<div class="flex gap-4">
-		<select v-model="filters.values.age_range">
-			<option v-for="option in filters.options.age_range">{{ option }}</option>
-		</select>
+		<label v-for="(options, key) in filters.options">
+			<span class="capitalize">{{ key.split('_').join(' ') }}</span>
 
-		<select v-model="filters.values.gender">
-			<option v-for="option in filters.options.gender">{{ option }}</option>
-		</select>
+			<select v-model="filters.values[key]">
+				<option v-for="option in options">{{ option }}</option>
+			</select>
+		</label>
+
+		<DateRangePicker v-model="filters.values.date" min="2021-05-31" max="2021-07-01" />
 	</div>
 </template>
 

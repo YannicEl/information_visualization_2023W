@@ -2,13 +2,13 @@
 loadData();
 loadBoundariesData();
 
-const { data } = useData();
+const { loaded } = useData();
 const { boundariesData } = useBoundariesData();
 </script>
 
 <template>
 	<div
-		v-if="data.length && boundariesData"
+		v-if="loaded && boundariesData"
 		class="grid h-screen grid-cols-2 grid-rows-[min-content] gap-4 p-4"
 	>
 		<FilterView class="col-span-2" />

@@ -12,3 +12,16 @@
 html {
 	@apply font-sans text-base;
 }
+
+select,
+input {
+	@apply border-2 border-black px-2 py-1;
+}
+
+label {
+	@apply flex flex-col;
+
+	span {
+		@apply pb-1 pl-2 text-xs;
+	}
+}
