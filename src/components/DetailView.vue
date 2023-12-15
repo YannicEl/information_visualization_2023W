@@ -1,6 +1,11 @@
 <template>
 	<div class="border-2 border-black p-4">
-		<div v-for="key in Object.keys(info)" :key="key" class="flex">
+		<div
+			v-for="(key, index) in Object.keys(info)"
+			:key="key"
+			class="flex justify-between"
+			:class="index % 2 ? 'bg-gray-50' : ''"
+		>
 			<div class="underline">{{ dataNameMapping[key] }}:</div>
 			<div class="ml-1">
 				{{ info[key] }}
